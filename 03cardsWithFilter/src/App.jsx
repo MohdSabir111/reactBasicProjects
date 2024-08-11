@@ -31,7 +31,9 @@ function App() {
         </button>
       </div>
       <div className=" flex gap-3 justify-center flex-wrap">
-        {filterData.map((item) => (
+        { 
+        filterData.length <=0 ? <h1> No Items</h1>
+       : filterData.map((item) => (
           <Card imageSrc={item.image} title={item.name} key={item.id}></Card>
         ))}
       </div>
