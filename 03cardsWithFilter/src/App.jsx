@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import Card from "./Card";
-import { data } from "./data";
 
 function App() {
   const [inputVal, setInputVal] = useState("");
-  const [filterData, setFilterData] = useState(data);
+  const [filterData, setFilterData] = useState("");
+  const [initialData, setInitialData] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      let res = await fetch("https://dummyjson.com/products");
+      let json = await res.json();
+      setFilterData(json.products);
+      setInitialData(json.products);
+    };
+    fetchData();
+  }, []);
 
   function filterHandler() {
-    let res = data.filter((item) =>
-      item.name.toLowerCase().includes(inputVal.toLowerCase())
+    let res = initialData.filter((item) =>
+      item.title.toLowerCase().includes(inputVal.toLowerCase())
     );
     setFilterData(res);
   }
@@ -25,17 +34,23 @@ function App() {
         />
         <button
           className="bg-slate-400 rounded-3xl  px-7 my-5 hover:bg-slate-500 delay-100"
-          onClick={filterHandler}>
-            
+          onClick={filterHandler}
+        >
           Search
         </button>
       </div>
       <div className=" flex gap-3 justify-center flex-wrap">
-        { 
-        filterData.length <=0 ? <h1> No Items</h1>
-       : filterData.map((item) => (
-          <Card imageSrc={item.image} title={item.name} key={item.id}></Card>
-        ))}
+        {filterData.length <= 0 ? (
+          <h1> No Items</h1>
+        ) : (
+          filterData.map((item) => (
+            <Card
+              imageSrc={item.images}
+              title={item.title}
+              key={item.id}
+            ></Card>
+          ))
+        )}
       </div>
     </>
   );
