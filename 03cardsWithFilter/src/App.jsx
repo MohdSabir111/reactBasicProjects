@@ -10,7 +10,6 @@ function App() {
     const fetchData = async () => {
       let res = await fetch("https://dummyjson.com/products");
       let json = await res.json();
-      setFilterData(json.products);
       setInitialData(json.products);
     };
     fetchData();
