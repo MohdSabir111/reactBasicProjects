@@ -1,3 +1,5 @@
+[Contribution guidelines for this project](docs/CONTRIBUTING.md)
+
 1. Hooks
 useState
 useEffect ( significance of dependency array eg. what happens when its empty, when it has some value, when its not there)
